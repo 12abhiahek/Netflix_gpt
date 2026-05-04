@@ -3,13 +3,14 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
+import Body from './components/Body'
 
 function App() {
 
 
   return (
     <>
-    Hello Namste 
+    {/* Hello Namste 
     <div className="design">
       <div className="left">
         <h1 className="title">Unlimited movies, TV shows, and more.</h1>
@@ -28,7 +29,9 @@ function App() {
 
     <div className="text-3xl font-bold underline text-center mt-10 text-red-500">
       Hello world!
-    </div>
+    </div> */}
+
+    <Body />
     </>
   )
 }
