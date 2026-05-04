@@ -55,7 +55,7 @@ const Header = ({ onSignInClick }) => {
 
         <button
           onClick={onSignInClick}
-          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded font-semibold"
+          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded font-semibold cursor-pointer"
         >
           Sign In
         </button>

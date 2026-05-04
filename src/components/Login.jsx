@@ -128,10 +128,12 @@
 
 import { useState } from "react";
 import Header from "./Header";
+import { validateForm } from "../utils/Validate";
 
 const Login = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const [formData, setFormData] = useState({
     name: "",
@@ -145,27 +147,25 @@ const Login = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (isSignUp) {
-      // 🔴 Basic validation
-      if (formData.password !== formData.confirmPassword) {
-        alert("Passwords do not match");
-        return;
-      }
+  const validationErrors = validateForm(formData, isSignUp);
 
-      // 👉 CALL SIGNUP API HERE
-      console.log("Signup Data:", formData);
+if (Object.keys(validationErrors).length > 0) {
+  setErrors(validationErrors);
+  return;
+}
 
-      alert("Signup successful! Now login.");
-      setIsSignUp(false);
-    } else {
-      // 👉 CALL LOGIN API HERE
-      console.log("Login Data:", formData);
-
-      alert("Login successful!");
-    }
-  };
+  //  If no errors → proceed
+  if (isSignUp) {
+    console.log("Signup Data:", formData);
+    alert("Signup successful! Now login.");
+    setIsSignUp(false);
+  } else {
+    console.log("Login Data:", formData);
+    alert("Login successful!");
+  }
+};
 
   return (
     <div className="relative h-screen w-full overflow-hidden">
@@ -256,6 +256,7 @@ const Login = () => {
                 onChange={handleChange}
                 className="p-3 rounded bg-gray-800 border border-gray-600"
               />
+              {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
 
               <input
                 type="password"
@@ -265,6 +266,7 @@ const Login = () => {
                 onChange={handleChange}
                 className="p-3 rounded bg-gray-800 border border-gray-600"
               />
+              {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
 
               {isSignUp && (
                 <input
@@ -276,8 +278,9 @@ const Login = () => {
                   className="p-3 rounded bg-gray-800 border border-gray-600"
                 />
               )}
+              {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
 
-              <button className="bg-red-600 hover:bg-red-700 py-3 rounded font-semibold">
+              <button className="bg-red-600 hover:bg-red-700 py-3 rounded font-semibold cursor-pointer">
                 {isSignUp ? "Sign Up" : "Sign In"}
               </button>
             </form>
